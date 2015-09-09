@@ -9,7 +9,7 @@ INSTALL_BDE_ADMIN=false
 OPEN_PORTS=false
 
 CONFIRM=false
-DRYRUN=false
+DRYRUN=true
 
 while getopts e:u:j:a:c:k:d:p: opt; do
   case $opt in
