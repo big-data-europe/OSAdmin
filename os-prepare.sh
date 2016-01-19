@@ -103,8 +103,8 @@ if [ "$INSTALL_HADOOP" = true ]; then
   addgroup hadoop
   adduser -q --ingroup hadoop --disabled-password --gecos "User" hduser
   adduser hduser sudo
-  sudo su hduser
   sudo -u hduser -H sh -c "ssh-keygen -t rsa -b 4096 -P '' -f ~/id_rsa"
+  sudo -u hduser -H sh -c "mkdir ~/.ssh && touch ~/.ssh/authorized_keys"
   sudo -u hduser -H sh -c "cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys"
   cat > /etc/sudoers.d/hduser_conf <<EOL
 hduser ALL=(ALL) NOPASSWD:ALL
