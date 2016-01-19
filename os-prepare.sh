@@ -112,6 +112,7 @@ EOL
   passwd hduser -l
   echo "Downloading and installing hadoop"
   wget http://mirrors.gigenet.com/apache/hadoop/common/stable/hadoop-2.7.1.tar.gz
+  mkdir /usr/local/hadoop
   tar xvzf hadoop-2.7.1.tar.gz -C /usr/local/hadoop  
   ln -s /usr/local/hadoop/hadoop-2.7.1 /usr/local/hadoop/current
   chown -R hduser:hadoop /usr/local/hadoop
