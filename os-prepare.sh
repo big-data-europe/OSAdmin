@@ -4,6 +4,9 @@ INSTALL_OPENSSH_SERVER=false
 INSTALL_SSH_KEY=false
 INSTALL_JDK=false
 INSTALL_HADOOP=false
+INSTALL_HADOOP_MASTER=false
+INSTALL_HADOOP_SLAVE=false
+INSTALL_MESOS=false
 OPEN_PORTS=false
 
 CONFIRM=false
@@ -34,6 +37,12 @@ case $key in
     -h|--hadoop)
     if [ "$2" = true ]; then
       INSTALL_HADOOP=true
+    fi
+    shift
+    ;;
+    -m|--mesos)
+    if [ "$2" = true ]; then
+      INSTALL_MESOS=true;
     fi
     shift
     ;;
@@ -116,7 +125,7 @@ EOL
   tar xvzf hadoop-2.7.1.tar.gz -C /usr/local/hadoop  
   ln -s /usr/local/hadoop/hadoop-2.7.1 /usr/local/hadoop/current
   chown -R hduser:hadoop /usr/local/hadoop
-  cat > /etc/profile.d/hadoop.sh <<EOL
+  cat > /etc/profile.d/hadoop.sh << 'EOF'
 export HADOOP_INSTALL=/usr/local/hadoop/current
 export PATH=$PATH:$HADOOP_INSTALL/bin
 export PATH=$PATH:$HADOOP_INSTALL/sbin
@@ -124,6 +133,14 @@ export HADOOP_MAPRED_HOME=$HADOOP_INSTALL
 export HADOOP_COMMON_HOME=$HADOOP_INSTALL
 export HADOOP_HDFS_HOME=$HADOOP_INSTALL
 export YARN_HOME=$HADOOP_INSTALL
-EOL
+EOF
   source /etc/profile.d/hadoop.sh
+fi
+
+if [ "$INSTALL_MESOS" = true ]; then
+  sudo apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF
+  DISTRO=$(lsb_release -is | tr '[:upper:]' '[:lower:]')
+  CODENAME=$(lsb_release -cs)
+  echo "deb http://repos.mesosphere.io/${DISTRO} ${CODENAME} main" | sudo tee /etc/apt/sources.list.d/mesosphere.list
+  apt-get -y update
 fi
