@@ -77,28 +77,11 @@ if [ "$CONFIRM" = false ]; then
 fi
 
 if [ "$INSTALL_JDK" = true ]; then  
-  # see: http://tecadmin.net/install-java-8-on-centos-rhel-and-fedora/
   echo "Installing JDK8"
-  cd /opt
-  mkdir java
-  cd java
-  wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u45-b14/jdk-8u45-linux-x64.tar.gz"
-  tar xzf jdk-8u45-linux-x64.tar.gz
-  ln -s jdk1.8.0_45 current
-  cd current
-  update-alternatives --install /usr/bin/java java /opt/java/current/bin/java 2
-  update-alternatives --set java /opt/java/current/bin/java
-  update-alternatives --install /usr/bin/jar jar /opt/java/current/bin/jar 2
-  update-alternatives --install /usr/bin/javac javac /opt/java/current/bin/javac 2
-  update-alternatives --set jar /opt/java/current/bin/jar
-  update-alternatives --set javac /opt/java/current/bin/javac
-
-cat > /etc/profile.d/jdk.sh <<EOL
-JAVA_HOME=/opt/java/current
-export JAVA_HOME
-EOL
-  source /etc/profile.d/jdk.sh
-
+  add-apt-repository ppa:webupd8team/java
+  apt-get update
+  apt-get install oracle-jdk8-installer
+  apt-get install oracle-jdk8-set-default
 fi
 
 
