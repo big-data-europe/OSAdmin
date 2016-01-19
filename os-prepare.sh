@@ -80,8 +80,8 @@ if [ "$INSTALL_JDK" = true ]; then
   echo "Installing JDK8"
   add-apt-repository ppa:webupd8team/java
   apt-get update
-  apt-get install oracle-jdk8-installer
-  apt-get install oracle-jdk8-set-default
+  apt-get install oracle-java8-installer
+  apt-get install oracle-java8-set-default
 fi
 
 
