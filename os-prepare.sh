@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 INSTALL_OPENSSH_SERVER=false
 INSTALL_SSH_KEY=false
@@ -50,7 +50,7 @@ echo "INSTALL_HADOOP:$INSTALL_HADOOP";
 echo "CONFIRM:$CONFIRM"
 
 if [ "$CONFIRM" = false ]; then
-  read -n1 -r -p "OK? (Enter Y to continue the installation process) " REPLY_CONFIRM
+  read -s -r -p "OK? (Enter Y to continue the installation process) " REPLY_CONFIRM
   if [[ ! $REPLY_CONFIRM =~ ^[Yy]$ ]]
   then
     echo "ABORTED"
