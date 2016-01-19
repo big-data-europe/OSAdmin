@@ -31,6 +31,12 @@ case $key in
     fi
     shift # past argument
     ;;
+    -h|--hadoop)
+    if [ "$2" = true ]; then
+      INSTALL_HADOOP=true
+    fi
+    shift
+    ;;
     --confirm)
     if [ "$2" = true ]; then
       CONFIRM="$2"
@@ -89,4 +95,19 @@ fi
 
 if [ "$INSTALL_OPENSSH_SERVER" = true ]; then
   aptitude -y install openssh-server  
+fi
+
+if [ "$INSTALL_HADOOP" = true ]; then
+  echo "Installing Hadoop"
+  echo "Creating user (hduser) and group (hadoop)"
+  addgroup hadoop
+  adduser --ingroup hadoop hduser
+  adduser hduser sudo
+  sudo su hduser
+  ssh-keygen -t rsa -b 4096 -P ''
+  cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+  cat > /etc/sudoers.d/hduser_conf <<EOL
+hduser ALL=(ALL) NOPASSWD:ALL
+EOL
+  passwd hduser -l -t
 fi
