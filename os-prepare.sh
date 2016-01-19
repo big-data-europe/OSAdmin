@@ -141,8 +141,8 @@ if [ "$INSTALL_MESOS" = true ]; then
   sudo apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF
   DISTRO=$(lsb_release -is | tr '[:upper:]' '[:lower:]')
   CODENAME=$(lsb_release -cs)
-  cat > /etc/apt/sources.list.d/mesossphere.list << 'EOF'
+  cat > /etc/apt/sources.list.d/mesossphere.list << EOL
 deb http://repos.mesosphere.io/${DISTRO} ${CODENAME} main
-EOF
+EOL
   apt-get -y update
 fi
