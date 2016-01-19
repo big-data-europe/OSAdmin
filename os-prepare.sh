@@ -50,7 +50,7 @@ echo "INSTALL_HADOOP:$INSTALL_HADOOP";
 echo "CONFIRM:$CONFIRM"
 
 if [ "$CONFIRM" = false ]; then
-  read -s -r -p "OK? (Enter Y to continue the installation process) " REPLY_CONFIRM
+  read -r -p "OK? (Enter Y to continue the installation process) " REPLY_CONFIRM
   echo ""
   if [[ ! $REPLY_CONFIRM =~ ^[Yy]$ ]]
   then
@@ -84,4 +84,9 @@ export JAVA_HOME
 EOL
   source /etc/profile.d/jdk.sh
 
+fi
+
+
+if [ "$INSTALL_OPENSSH_SERVER" = true ]; then
+  aptitude -y install openssh-server  
 fi
