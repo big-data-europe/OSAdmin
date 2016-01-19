@@ -145,4 +145,5 @@ if [ "$INSTALL_MESOS" = true ]; then
 deb http://repos.mesosphere.io/${DISTRO} ${CODENAME} main
 EOL
   apt-get -y update
+  sudo apt-get -y install mesos marathon
 fi
