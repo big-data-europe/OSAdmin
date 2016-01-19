@@ -101,7 +101,7 @@ if [ "$INSTALL_HADOOP" = true ]; then
   echo "Installing Hadoop"
   echo "Creating user (hduser) and group (hadoop)"
   addgroup hadoop
-  adduser --ingroup hadoop hduser
+  adduser -q --ingroup hadoop hduser
   adduser hduser sudo
   sudo su hduser
   ssh-keygen -t rsa -b 4096 -P ''
