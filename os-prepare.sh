@@ -110,4 +110,19 @@ if [ "$INSTALL_HADOOP" = true ]; then
 hduser ALL=(ALL) NOPASSWD:ALL
 EOL
   passwd hduser -l
+  echo "Downloading and installing hadoop"
+  wget http://mirrors.gigenet.com/apache/hadoop/common/stable/hadoop-2.7.1.tar.gz
+  tar xvzf hadoop-2.7.1.tar.gz -C /usr/local/hadoop  
+  ln -s /usr/local/hadoop/hadoop-2.7.1 /usr/local/hadoop/current
+  chown -R hduser:hadoop /usr/local/hadoop
+  cat > /etc/profile.d/hadoop.sh <<EOL
+export HADOOP_INSTALL=/usr/local/hadoop/current
+export PATH=$PATH:$HADOOP_INSTALL/bin
+export PATH=$PATH:$HADOOP_INSTALL/sbin
+export HADOOP_MAPRED_HOME=$HADOOP_INSTALL
+export HADOOP_COMMON_HOME=$HADOOP_INSTALL
+export HADOOP_HDFS_HOME=$HADOOP_INSTALL
+export YARN_HOME=$HADOOP_INSTALL
+EOL
+  source /etc/profile.d/hadoop.sh
 fi
