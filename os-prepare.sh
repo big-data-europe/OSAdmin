@@ -51,6 +51,7 @@ echo "CONFIRM:$CONFIRM"
 
 if [ "$CONFIRM" = false ]; then
   read -s -r -p "OK? (Enter Y to continue the installation process) " REPLY_CONFIRM
+  echo ""
   if [[ ! $REPLY_CONFIRM =~ ^[Yy]$ ]]
   then
     echo "ABORTED"
