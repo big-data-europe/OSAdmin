@@ -54,7 +54,7 @@ case $key in
     fi
     shift
     ;;
-    -k|--kafka)
+    --kafka)
     if [ "$2" = true ]; then
       INSTALL_KAFKA=true
     fi
@@ -76,6 +76,10 @@ echo "INSTALL_OPENSSH_SERVER:$INSTALL_OPENSSH_SERVER";
 echo "INSTALL_SSH_KEY:$INSTALL_SSH_KEY";
 echo "INSTALL_JDK:$INSTALL_JDK";
 echo "INSTALL_HADOOP:$INSTALL_HADOOP";
+echo "INSTALL_MESOS:$INSTALL_MESOS";
+echo "INSTALL_MARATHON:$INSTALL_MARATHON";
+echo "INSTALL_KAFKA:$INSTALL_KAFKA"
+
 echo "CONFIRM:$CONFIRM"
 
 if [ "$CONFIRM" = false ]; then
@@ -161,7 +165,6 @@ if [ "$INSTALL_KAFKA" = true ]; then
   wget http://maven.big-data-europe.eu/nexus/content/repositories/thirdparty/org/apache/kafka/kafka-mesos/0.9.4.0/kafka-mesos-0.9.4.0-distribution.zip
   mkdir -p /usr/local/kafka-mesos/kafka-mesos-0.9.4.0
   ln -s /usr/local/kafka-mesos/kafka-mesos-0.9.4.0 /usr/local/kafka-mesos/current
-  cp kafka-mesos-0.9.4.0-distribution.zip /usr/local/kafka-mesos/kafka-mesos-0.9.4.0
-  unzip /usr/local/kafka-mesos/kafka-mesos-0.9.4.0/kafka-mesos-0.9.4.0-distribution.zip
+  unzip kafka-mesos-0.9.4.0-distribution.zip -d /usr/local/kafka-mesos/kafka-mesos-0.9.4.0/
   echo "Consult /usr/local/kafka-mesos/kafka-mesos-0.9.4.0/README for setting up and running kafka on mesos"
 fi
