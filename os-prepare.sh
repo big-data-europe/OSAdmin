@@ -7,6 +7,8 @@ INSTALL_HADOOP=false
 INSTALL_HADOOP_MASTER=false
 INSTALL_HADOOP_SLAVE=false
 INSTALL_MESOS=false
+INSTALL_MARATHON=false
+INSTALL_KAFKA=false
 OPEN_PORTS=false
 
 CONFIRM=false
@@ -43,6 +45,18 @@ case $key in
     -m|--mesos)
     if [ "$2" = true ]; then
       INSTALL_MESOS=true;
+    fi
+    shift
+    ;;
+    --marathon)
+    if [ "$2" = true ]; then
+      INSTALL_MARATHON=true
+    fi
+    shift
+    ;;
+    -k|--kafka)
+    if [ "$2" = true ]; then
+      INSTALL_KAFKA=true
     fi
     shift
     ;;
@@ -128,5 +142,26 @@ if [ "$INSTALL_MESOS" = true ]; then
 deb http://repos.mesosphere.io/${DISTRO} ${CODENAME} main
 EOL
   apt-get -y update
-  sudo apt-get -y install mesos marathon
+  sudo apt-get -y install mesos
+fi
+
+if [ "$INSTALL_MARATHON" = true ]; then
+  sudo apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF
+  DISTRO=$(lsb_release -is | tr '[:upper:]' '[:lower:]')
+  CODENAME=$(lsb_release -cs)
+  cat > /etc/apt/sources.list.d/mesossphere.list << EOL
+deb http://repos.mesosphere.io/${DISTRO} ${CODENAME} main
+EOL
+  apt-get -y update
+  sudo apt-get -y install marathon
+fi
+
+if [ "$INSTALL_KAFKA" = true ]; then
+  echo "Downloading and installing kafka-mesos-0.9.4.0"
+  wget http://maven.big-data-europe.eu/nexus/content/repositories/thirdparty/org/apache/kafka/kafka-mesos/0.9.4.0/kafka-mesos-0.9.4.0-distribution.zip
+  mkdirs /usr/local/kafka-mesos/kafka-mesos-0.9.4.0
+  ln -s /usr/local/kafka-mesos/kafka-mesos-0.9.4.0 /usr/local/kafka-mesos/current
+  cp kafka-mesos-0.9.4.0-distribution.zip /usr/local/kafka-mesos/kafka-mesos-0.9.4.0
+  unzip /usr/local/kafka-mesos/kafka-mesos-0.9.4.0/kafka-mesos-0.9.4.0-distribution.zip
+  echo "Consult /usr/local/kafka-mesos/kafka-mesos-0.9.4.0/README for setting up and running kafka on mesos"
 fi
