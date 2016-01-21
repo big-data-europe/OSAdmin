@@ -159,7 +159,7 @@ fi
 if [ "$INSTALL_KAFKA" = true ]; then
   echo "Downloading and installing kafka-mesos-0.9.4.0"
   wget http://maven.big-data-europe.eu/nexus/content/repositories/thirdparty/org/apache/kafka/kafka-mesos/0.9.4.0/kafka-mesos-0.9.4.0-distribution.zip
-  mkdirs /usr/local/kafka-mesos/kafka-mesos-0.9.4.0
+  mkdir -p /usr/local/kafka-mesos/kafka-mesos-0.9.4.0
   ln -s /usr/local/kafka-mesos/kafka-mesos-0.9.4.0 /usr/local/kafka-mesos/current
   cp kafka-mesos-0.9.4.0-distribution.zip /usr/local/kafka-mesos/kafka-mesos-0.9.4.0
   unzip /usr/local/kafka-mesos/kafka-mesos-0.9.4.0/kafka-mesos-0.9.4.0-distribution.zip
